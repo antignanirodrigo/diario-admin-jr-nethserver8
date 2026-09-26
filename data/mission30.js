@@ -1,0 +1,26 @@
+const q=(id,title,question,right,options,reasons,analogy)=>({id,title,question,choices:options.map((text,i)=>({id:String(i),text,correct:i===right,why:`${reasons[i]} 💡 Analogia do Sênior: ${analogy}`}))});
+const docs='https://docs.nethserver.org/docs/administrator-manual/';
+export const mission30={
+ id:30,xp:430,level:'Entrega colaborativa · 60-75 min',title:'Nextcloud entregue com aceite funcional',
+ summary:'Feche o piloto colaborativo com login, upload, compartilhamento, backup planejado e documentação operacional.',
+ call:'CH-NS8-030 · O Nextcloud piloto já está instalado, autenticando e publicado. A Aurora exige aceite: Ana e Mariana entram, Bruno fica fora, upload funciona, backup está planejado e documentação operacional foi registrada.',
+ impact:'Sem aceite funcional, a aplicação parece pronta só na tela do admin. O usuário mede valor por login, upload, compartilhamento e recuperação.',
+ senior:'O Júnior mostrou o HTTP 200. O Sênior sorriu pouco: “Agora faça o que o usuário fará.” Login, upload, compartilhamento e backup viraram evidência. Na Aurora fictícia, o piloto saiu com prova de uso, não com print do painel.',
+ concept:'Entrega de aplicação combina saúde técnica e fluxo de usuário. Para colaboração, teste login, upload, compartilhamento, acesso negado e backup. Documente responsável, FQDN, grupos, tarefas recorrentes e critérios para expandir o piloto.',
+ example:'Você lê cat entrega-nextcloud.txt, executa app-status nextcloud1, login-test ana cloud, login-test mariana cloud, login-test bruno cloud, upload-test ana cloud, share-test ana mariana cloud e nextcloud-backup-plan. Depois fecha o checklist.',
+ glossary:[['Aceite funcional','Teste do uso real esperado','Usuário faz o que precisa fazer.'],['Upload','Envio de arquivo','Colocar documento na sala.'],['Compartilhamento interno','Liberar arquivo a outro usuário autorizado','Entregar cópia controlada.'],['Runbook','Documento de operação','Manual mínimo para manter o serviço.']],
+ recall:{question:'Por que HTTP 200 não basta para entregar Nextcloud?',answer:'Porque HTTP 200 não prova login, upload, compartilhamento, negação de usuário fora do escopo nem recuperação.'},
+ labIntro:'Onde executar: terminal e painel educativo de aceite funcional e homologação do piloto.',
+ labSteps:['Execute whoami, hostname, cat entrega-nextcloud.txt e app-status nextcloud1.', 'Execute login-test ana cloud, login-test mariana cloud e login-test bruno cloud.', 'Execute upload-test ana cloud, share-test ana mariana cloud e nextcloud-backup-plan.', 'Feche checklist e valide entrega.'],
+ objectives:[['identity','Confirmar operador'],['host','Confirmar nó'],['cloudHandoffPlan','Ler aceite'],['cloudAppStatus','Consultar app'],['anaCloudLogin','Ana entra'],['marianaCloudLogin','Mariana entra'],['brunoCloudDenied','Bruno negado'],['cloudUpload','Upload funciona'],['cloudShare','Compartilhamento funciona'],['cloudBackupPlan','Backup planejado'],['cloudHandoffChecklist','Checklist fechado'],['cloudHandoffVerified','Entrega validada']],
+ hints:['Teste o que o usuário fará, não só status técnico.', 'Bruno precisa continuar negado.', 'Checklist só vale depois dos testes.'],
+ testking:[q('n30-http','HTTP 200','HTTP 200 sozinho prova entrega?',1,['Sim, sempre','Não; faltam testes funcionais','Sim, se o painel é bonito'],['Aplicação pode abrir e falhar no uso.','Entrega exige fluxo do usuário.','Visual não mede valor.'],'Porta aberta não prova atendimento completo.'),q('n30-flow','Fluxo','Qual fluxo representa colaboração?',2,['Só app-status','Só trocar tema','Login, upload e compartilhamento'],['Status é técnico.','Tema é visual.','Esse é uso real.'],'Usuário precisa trabalhar, não admirar tela.'),q('n30-runbook','Runbook','O que documentar?',0,['FQDN, grupos, backup, responsável e rotina','Senha dos usuários','Nada, porque está funcionando'],['Esses dados sustentam operação.','Segredos não entram no diário.','Sem documento, suporte vira memória.'],'Manual curto evita apagar incêndio.')],
+ decisionPrompt:'Qual aceite é completo?',
+ decisions:[{id:'http',label:'Entregar com HTTP 200 apenas',correct:false,consequence:'Você não testou fluxo de usuário.'},{id:'functional',label:'Entregar com login, upload, share, negação e backup',correct:true,consequence:'O piloto tem evidência de uso real.'},{id:'allusers',label:'Liberar todos para facilitar adoção',correct:false,consequence:'Você quebra o escopo do piloto.'}],
+ procedure:['Valide saúde da instância.', 'Teste usuários permitidos e negados.', 'Teste upload e compartilhamento interno.', 'Confira backup e documentação operacional.', 'Defina critérios de expansão do piloto.'],
+ validation:'Evidência: app running, Ana/Mariana entram, Bruno negado, upload e share OK, backup planejado e checklist completo. Retorno: desmarcar checklist invalida entrega.',
+ challenge:'Escreva um aceite do piloto Nextcloud com cinco evidências e duas pendências para expansão.',
+ diaryPlaceholder:'Nextcloud piloto aceito; Ana/Mariana OK; Bruno negado; upload/share OK; backup planejado...',
+ closing:'Você entregou a aplicação colaborativa com prova. O próximo módulo muda de assunto: correio eletrônico, onde DNS público e reputação importam muito mais.',
+ sources:[['Nextcloud',docs+'applications/nextcloud'],['Backup',docs+'configuration/backup']]
+};

@@ -1,0 +1,26 @@
+const q=(id,title,question,right,options,reasons,analogy)=>({id,title,question,choices:options.map((text,i)=>({id:String(i),text,correct:i===right,why:`${reasons[i]} 💡 Analogia do Sênior: ${analogy}`}))});
+const docs='https://docs.nethserver.org/docs/administrator-manual/';
+export const mission25={
+ id:25,xp:380,level:'Entrega prática · 60-75 min',title:'Servidor de arquivos entregue com prova',
+ summary:'Feche o módulo de arquivos com checklist de caminho, grupos, testes, backup planejado e ensaio de restauração.',
+ call:'CH-NS8-025 · O financeiro vai começar a usar a pasta. Antes da entrega, a Aurora exige evidências: share criado, Ana/Carla gravam, Bruno é negado, backup planejado e restauração simulada documentada.',
+ impact:'Sem teste negativo e sem recuperação, a entrega fica incompleta. Servidor de arquivos não é só criar pasta; é acesso correto e capacidade de recuperar.',
+ senior:'O Júnior comemorou o acesso da Ana. O Sênior perguntou: “E se Bruno entrar? E se apagarem o arquivo?” A sala ficou quieta. Na Aurora fictícia, a entrega só foi aceita com teste permitido, teste negado e ensaio de restauração simulado.',
+ concept:'Uma entrega operacional precisa de evidências: caminho do compartilhamento, grupos autorizados, testes de acesso, negação esperada, plano de backup e ensaio de restauração. O ensaio não precisa restaurar produção; deve provar que há método e limite conhecido.',
+ example:'Você lê cat entrega-arquivos.txt, executa share-list, access-test ana financeiro, access-test carla financeiro, access-test bruno financeiro, backup-plan-check e restore-drill --simulate. No painel, fecha o checklist de entrega.',
+ glossary:[['Entrega','Serviço pronto com evidência','Não é promessa; é prova anexada.'],['Teste negativo','Usuário proibido negado','A fechadura nega quem deve negar.'],['Restauração simulada','Ensaio sem tocar produção','Treino de recuperar antes do desastre.'],['Checklist','Lista mínima de aceite','Contrato de saída da mudança.']],
+ recall:{question:'Por que backup planejado não basta?',answer:'Porque backup sem ensaio pode falhar quando mais precisa. A entrega deve incluir evidência de teste ou limite claro do que foi simulado.'},
+ labIntro:'Onde executar: terminal e painel educativo de aceite. O restore é simulado.',
+ labSteps:['Execute whoami, hostname, cat entrega-arquivos.txt e share-list.', 'Execute os três access-test: ana, carla e bruno.', 'Execute backup-plan-check e restore-drill --simulate.', 'Feche o checklist no painel e valide a entrega.'],
+ objectives:[['identity','Confirmar operador'],['host','Confirmar nó'],['handoffFiles','Ler entrega'],['shareList','Listar shares'],['anaAllowed','Testar Ana'],['carlaAllowed','Testar Carla'],['brunoDenied','Testar Bruno negado'],['backupPlan','Conferir backup'],['restoreDrill','Ensaiar restauração'],['fileHandoffChecklist','Fechar checklist'],['fileHandoffVerified','Validar entrega']],
+ hints:['A entrega exige positivo e negativo.', 'backup-plan-check não substitui restore-drill --simulate.', 'Marque todos os itens do checklist depois das evidências.'],
+ testking:[q('n25-negative','Negativo','Por que testar Bruno?',1,['Para liberar suporte','Para provar negação esperada','Para medir CPU'],['Não é o pedido.','Segurança exige negar quem não deve entrar.','CPU não é acesso.'],'A porta precisa negar também.'),q('n25-restore','Restore','Qual item fortalece a entrega?',2,['Só print do share','Só relato verbal','Ensaio de restauração simulado e documentado'],['Print é parcial.','Relato não prova método.','Mostra caminho de recuperação.'],'Seguro sem teste é esperança.'),q('n25-handoff','Aceite','Entrega profissional contém o quê?',0,['Caminho, grupos, testes e recuperação','Senha anotada no diário','Everyone RW temporário'],['São evidências úteis.','Segredo não deve ser exposto.','Temporário amplo vira permanente.'],'Recibo técnico, não promessa.')],
+ decisionPrompt:'Qual aceite é honesto?',
+ decisions:[{id:'partial',label:'Entregar só com Ana funcionando',correct:false,consequence:'Você não provou negação nem recuperação.'},{id:'complete',label:'Entregar com testes positivo/negativo e restauração simulada',correct:true,consequence:'O serviço saiu com evidência operacional.'},{id:'open',label:'Abrir para todos até estabilizar',correct:false,consequence:'Você cria risco no início do uso.'}],
+ procedure:['Liste caminho, dono do dado e grupos.', 'Teste usuários permitidos e negados.', 'Confira backup e execute ensaio de restauração em ambiente seguro.', 'Documente limites e responsáveis.', 'Entregue com checklist assinado tecnicamente.'],
+ validation:'Evidência: share listado, Ana/Carla permitidas, Bruno negado, backup planejado, restore simulado e checklist completo. Retorno: desmarcar checklist invalida entrega.',
+ challenge:'Monte uma mensagem curta de entrega para o financeiro com o que foi validado e o que ainda será monitorado.',
+ diaryPlaceholder:'financeiro disponível; Ana/Carla OK; Bruno negado; backup planejado; restore drill OK...',
+ closing:'Você fechou o módulo de arquivos com prova. Agora o curso entra em aplicações e colaboração: escolher aplicação antes de instalar.',
+ sources:[['Samba file server',docs+'applications/file_server'],['Backup',docs+'configuration/backup']]
+};

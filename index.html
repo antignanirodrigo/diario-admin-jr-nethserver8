@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Trilha interativa NethServer 8 — 60 Missões Completas — Diário de um Admin Jr.">
+  <title>Diário de um Admin Jr. — NethServer 8 — 60 Missões Completas</title>
+  <link rel="stylesheet" href="styles.css?v=ns8-20260916-r5">
+  <script>
+    if (window.location.protocol === 'file:') {
+      window.addEventListener('DOMContentLoaded', function() {
+        var main = document.getElementById('main');
+        var rail = document.getElementById('mission-list');
+        if (main) {
+          main.innerHTML = '<div style="max-width:800px;margin:50px auto;padding:32px;background:#132338;border:2px solid #00c2ff;border-radius:12px;color:#f8fafc;font-family:system-ui,-apple-system,sans-serif;box-shadow:0 10px 30px rgba(0,0,0,0.6);">' +
+            '<h2 style="color:#00c2ff;margin-top:0;font-size:1.6rem;">⚠️ Abrir pelo Servidor Local (Localhost)</h2>' +
+            '<p style="font-size:1.05rem;line-height:1.6;color:#cbd5e1;">Você abriu o <code>index.html</code> dando duplo clique no arquivo (<code>file:///</code>). Navegadores modernos (Chrome, Edge, Firefox) bloqueiam módulos JavaScript nessa modalidade por políticas de segurança (CORS).</p>' +
+            '<p style="font-size:1.05rem;line-height:1.6;color:#cbd5e1;">O servidor interno do curso já está rodando em segundo plano no seu computador.</p>' +
+            '<div style="margin-top:24px;">' +
+              '<a href="http://localhost:4174" style="display:inline-block;padding:14px 28px;background:#00a3e0;color:#03101d;text-decoration:none;font-weight:700;border-radius:8px;font-size:1.1rem;box-shadow:0 4px 12px rgba(0,163,224,0.4);">👉 Clique aqui para abrir: http://localhost:4174</a>' +
+            '</div>' +
+          '</div>';
+        }
+      });
+    }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+  <div class="app-shell">
+    <header class="topbar">
+      <button class="icon-button mobile-only" id="menu-button" aria-label="Abrir central de missões" aria-expanded="false">☰</button>
+      <button class="brand" id="home-button" aria-label="Voltar à central de missões">
+        <span class="brand-mark" aria-hidden="true">AJ</span>
+        <span><strong>DIÁRIO DE UM ADMIN JR</strong><small>NETHSERVER 8 — CURSO COMPLETO (60 MISSÕES)</small></span>
+      </button>
+      <div class="player-stats" aria-label="Progresso do aluno">
+        <span><small>XP</small><strong id="xp-value">0</strong></span>
+        <span><small>MISSÕES</small><strong id="completion-value">0/60</strong></span>
+      </div>
+    </header>
+
+    <aside class="mission-rail" id="mission-rail" aria-label="Central de missões">
+      <div class="rail-heading"><span>CENTRAL DE MISSÕES</span><button class="icon-button mobile-only" id="close-menu" aria-label="Fechar central">×</button></div>
+      <div class="rail-progress"><div id="rail-progress-bar"></div></div>
+      <nav id="mission-list"></nav>
+    </aside>
+
+    <main id="main" tabindex="-1"></main>
+  </div>
+
+  <div id="storage-warning" class="storage-warning" role="status" hidden>O armazenamento do navegador está indisponível. Você pode continuar, mas o progresso será perdido ao fechar a página.</div>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <dialog id="image-dialog" class="image-dialog">
+    <button class="dialog-close" aria-label="Fechar imagem">×</button>
+    <img id="dialog-image" alt="">
+    <p id="dialog-caption"></p>
+  </dialog>
+
+  <script type="module" src="js/app.js?v=ns8-20260916-r6"></script>
+</body>
+</html>

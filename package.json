@@ -1,0 +1,1 @@
+{"name":"diario-admin-jr-ns8-prototipo","private":true,"version":"0.1.0","type":"module","scripts":{"test":"node --test tests/*.test.js","start":"python -m http.server 4174 --bind 127.0.0.1"}}
