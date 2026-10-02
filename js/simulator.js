@@ -40,9 +40,40 @@ export class TerminalSimulator {
     this.history = Array.isArray(saved.history) ? saved.history.slice(-200) : [];
     this.flags = {...saved.flags}; this.lab = {...this.lab, ...saved.lab};
   }
-  autocomplete(line) {
-    const matches = this.commands().filter(c => c.startsWith(line));
-    return {line: matches.length === 1 ? matches[0] : line, matches};
+  autocomplete(rawLine = '') {
+    const line = String(rawLine);
+    if (!line.trim()) return { line, matches: [] };
+    const trailingSpace = /\s$/.test(line);
+    const typedTokens = line.trimStart().split(/\s+/);
+    const completedTokens = trailingSpace ? typedTokens : typedTokens.slice(0, -1);
+    const currentPrefix = trailingSpace ? '' : (typedTokens[typedTokens.length - 1] || '');
+    const before = trailingSpace ? line : line.slice(0, line.length - currentPrefix.length);
+
+    const nextTokenSet = new Set();
+    const hasMore = {};
+    for (const cmd of this.commands()) {
+      const cmdTokens = cmd.trim().split(/\s+/);
+      if (cmdTokens.length <= completedTokens.length) continue;
+      if (!completedTokens.every((t, i) => cmdTokens[i] === t)) continue;
+      const candidate = cmdTokens[completedTokens.length];
+      if (candidate.startsWith(currentPrefix)) {
+        nextTokenSet.add(candidate);
+        if (cmdTokens.length > completedTokens.length + 1) hasMore[candidate] = true;
+      }
+    }
+    const matches = [...nextTokenSet].sort();
+    if (matches.length === 1) {
+      return { line: before + matches[0] + (hasMore[matches[0]] ? ' ' : ''), matches };
+    }
+    if (matches.length > 1) {
+      const common = matches.reduce((acc, item) => {
+        let i = 0;
+        while (i < acc.length && i < item.length && acc[i] === item[i]) i++;
+        return acc.slice(0, i);
+      });
+      return { line: common.length > currentPrefix.length ? before + common : line, matches };
+    }
+    return { line, matches: [] };
   }
   commands() {
     const common = ['help','whoami','hostname','pwd','ls','cd /home/junior','clear'];
